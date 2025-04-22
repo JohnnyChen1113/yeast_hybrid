@@ -1,9 +1,15 @@
 #!/usr/bin/env Rscript
-suppressPackageStartupMessages(library(tidyverse))
-suppressPackageStartupMessages(library(optparse))
+
+# Suppress all warnings and messages during package loading
+suppressMessages({
+  suppressWarnings({
+    library(tidyverse)
+    library(optparse)
+  })
+})
 
 # Version number
-VERSION <- "0.2.0"
+VERSION <- "0.2.1"
 
 # Define command line options
 option_list <- list(
@@ -21,17 +27,17 @@ option_list <- list(
 
 # Parse command line arguments
 opt_parser <- OptionParser(option_list=option_list)
-opt <- parse_args(opt_parser, print_help_and_exit=FALSE)
-
-# If no arguments provided, print help and exit
-if (length(commandArgs(trailingOnly=TRUE)) == 0) {
-  print_help(opt_parser)
-  quit(status=0)
-}
+opt <- parse_args(opt_parser, print_help_and_exit=TRUE)  # Automatically handle -h/--help
 
 # Print version if requested
 if (opt$version) {
   cat("merge_shape_score.R version", VERSION, "\n")
+  quit(status=0)
+}
+
+# If no arguments provided (excluding help/version), print help and exit
+if (length(commandArgs(trailingOnly=TRUE)) == 0) {
+  print_help(opt_parser)
   quit(status=0)
 }
 
