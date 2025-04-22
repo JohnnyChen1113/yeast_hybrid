@@ -9,7 +9,7 @@ suppressMessages({
 })
 
 # Version number
-VERSION <- "0.2.1"
+VERSION <- "0.2.2"
 
 # Define command line options
 option_list <- list(
@@ -52,9 +52,9 @@ if (is.null(opt$output)) {
   opt$output <- paste0(prefix, "_merged.txt")
 }
 
-# Read the input files
-table1 <- read_tsv(opt$assigned)
-table2 <- read_tsv(opt$shape)
+# Read the input files with show_col_types = FALSE
+table1 <- read_tsv(opt$assigned, show_col_types = FALSE)
+table2 <- read_tsv(opt$shape, show_col_types = FALSE)
 
 # Merge tables based on cluster column
 merged_table <- table1 %>%
